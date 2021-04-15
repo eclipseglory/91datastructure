@@ -187,6 +187,7 @@ export default {
 
 <style>
 #canvas-group {
+  background-color: #F8F9FA;
   width: 100%;
   height: 100%;
   position: relative;

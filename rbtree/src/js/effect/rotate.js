@@ -37,7 +37,7 @@ export default class Rotate extends NodeDelegate {
         ctx.beginPath();
         let lineWidth = this.refNode.radius / 5;
         ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = ColorSchema.getLineColor();
+        ctx.strokeStyle = ColorSchema.getFrontLineColor();
         ctx.lineCap = "round";
         if (this.left) {
             let delta = -(Math.PI + Math.PI / 2);
@@ -48,7 +48,7 @@ export default class Rotate extends NodeDelegate {
             let y = Math.sin(current) * radius;
             ctx.translate(x, y);
             ctx.rotate(current - Math.PI / 2);
-            ctx.fillStyle = ColorSchema.getLineColor();
+            ctx.fillStyle = ColorSchema.getFrontLineColor();
             ctx.fill(this._getArrowPath(lineWidth));
 
         } else {
@@ -60,7 +60,7 @@ export default class Rotate extends NodeDelegate {
             let y = Math.sin(current) * radius;
             ctx.translate(x, y);
             ctx.rotate(current + Math.PI / 2);
-            ctx.fillStyle = ColorSchema.getLineColor();
+            ctx.fillStyle = ColorSchema.getFrontLineColor();
             ctx.fill(this._getArrowPath(lineWidth));
         }
         ctx.restore();

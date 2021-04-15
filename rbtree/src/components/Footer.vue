@@ -10,7 +10,10 @@
     </div>
     <div id="left">
       <!-- <a href="#"><i class="fas fa-bug footer-left-icon"></i></a> -->
-      <a href="#" :title="$t('default.footer.reportbug')"
+      <a
+        href="https://github.com/eclipseglory/91datastructure/issues"
+        target="_blank"
+        :title="$t('default.footer.reportbug')"
         ><i class="fas fa-bug footer-left-icon"></i
       ></a>
     </div>
@@ -56,7 +59,7 @@ export default {
 }
 
 #developer:hover {
-  color: orange;
+  color: #fd7e14;
 }
 
 .footer-left-icon {
@@ -66,6 +69,6 @@ export default {
 }
 
 .footer-left-icon:hover {
-  color: orange;
+  color: #fd7e14;
 }
 </style>

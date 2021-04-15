@@ -63,11 +63,11 @@ export default class DrawableBRTree {
             this.root.draw(ctx);
         }
 
-        {
-            // TODO : debug:
-            ctx.strokeStyle = 'black';
-            ctx.strokeRect(-this.padding.left, -this.padding.top, this.width, this.height);
-        }
+        // {
+        //     // TODO : debug:
+        //     ctx.strokeStyle = 'black';
+        //     ctx.strokeRect(-this.padding.left, -this.padding.top, this.width, this.height);
+        // }
 
         ctx.restore();
     }

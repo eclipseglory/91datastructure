@@ -56,7 +56,10 @@
             </ul>
           </div>
           <div class="title-link-container">
-            <a href="#" :title="$t('default.title.githubdes')"
+            <a
+              href="https://github.com/eclipseglory/91datastructure/tree/main/rbtree"
+              target="_blank"
+              :title="$t('default.title.githubdes')"
               ><i
                 id="github"
                 class="fab fa-github title-font-size title-right-icon"
@@ -108,7 +111,7 @@ export default {
 #title-next {
   border-radius: 5px;
   font-weight: bold;
-  background-color: orange;
+  background-color: #fd7e14;
 }
 
 .title-font-size {
@@ -147,7 +150,7 @@ export default {
   color: whitesmoke;
 }
 .title-right-icon:hover {
-  color: orange;
+  color: #fd7e14;
 }
 
 .small-text {

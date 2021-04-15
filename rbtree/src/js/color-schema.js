@@ -1,18 +1,27 @@
 export default class ColorSchema {
     static SCHEMAS = {
         'default': {
-            'red': '#f05454',
-            'black': '#222831',
-            'line': '#30475e',
-            'bg': '#e8e8e8',
+            'red': '#DC3545',
+            'black': '#212529',
+            'line': '#576088',
+            'bg': '#F8F9FA',
             'focus': '#ffcef3',
             'light': '#fdfdfd',
             'lightsecond': '#a1eafb',
-            'second': '#cabbe9'
+            'second': '#cabbe9',
+            'frontline': '#8559a5'
         }
     }
 
     static currentSchema = 'default';
+
+    static getFrontLineColor() {
+        let colors = this.SCHEMAS[this.currentSchema];
+        if (colors != null) {
+            return colors.frontline;
+        }
+        return '#000000'
+    }
 
     static getFocusColor() {
         let colors = this.SCHEMAS[this.currentSchema];
