@@ -12,25 +12,25 @@ export default class Message {
         return this.$t(key, { id: id, num: num });
     }
 
-    static generateDeleteBlanceMsgSimple(caseKey, type, args) {
+    static generateDeleteBalanceMsgSimple(caseKey, type, args) {
         if (this.$t == null) return '';
         let key = `default.message.deleteBlance.simple.case${caseKey}.${type}`;
         return this.$t(key, args);
     }
 
-    static generateDeleteBlanceMsgComplex(caseKey, type, args) {
+    static generateDeleteBalanceMsgComplex(caseKey, type, args) {
         if (this.$t == null) return '';
         let key = `default.message.deleteBlance.complex.case${caseKey}.${type}`;
         return this.$t(key, args);
     }
 
-    static generateDeleteBlanceAdditionalMsg(key1, args) {
+    static generateDeleteBalanceAdditionalMsg(key1, args) {
         if (this.$t == null) return '';
         let key = `default.message.deleteBlance.additional${key1}`;
         return this.$t(key, args);
     }
 
-    static generateInsertBlanceMsg(caseKey, type, args) {
+    static generateInsertBalanceMsg(caseKey, type, args) {
         if (this.$t == null) return '';
         let key = `default.message.insertBlance.case${caseKey}.${type}`;
         return this.$t(key, args);

@@ -129,49 +129,49 @@ export default class TreeNode {
             let focus = [{ node: this }];
             let singleChild = this.left != null ? this.left : this.right;
             if (this.isRed) {
-                let reason = message.generateDeleteBlanceMsgSimple(1, 're', [this.id]);
-                let operation = message.generateDeleteBlanceMsgSimple(1, 'op');
-                let ca = message.generateDeleteBlanceMsgSimple(1, 'ca');
+                let reason = message.generateDeleteBalanceMsgSimple(1, 're', [this.id]);
+                let operation = message.generateDeleteBalanceMsgSimple(1, 'op');
+                let ca = message.generateDeleteBalanceMsgSimple(1, 'ca');
                 this._debug(reason);
                 return {
-                    'blance': false, 'replace': this, ca: ca,
+                    'balance': false, 'replace': this, ca: ca,
                     reason: reason, operation: operation, op: 'delete'
                 };
             }
             if (singleChild != null && singleChild.isRed) {
-                let reason = message.generateDeleteBlanceMsgSimple(2, 're', [this.id, singleChild.id]);
-                let operation = message.generateDeleteBlanceMsgSimple(2, 'op', [singleChild.id]);
-                let ca = message.generateDeleteBlanceMsgSimple(2, 'ca');
+                let reason = message.generateDeleteBalanceMsgSimple(2, 're', [this.id, singleChild.id]);
+                let operation = message.generateDeleteBalanceMsgSimple(2, 'op', [singleChild.id]);
+                let ca = message.generateDeleteBalanceMsgSimple(2, 'ca');
 
                 this._debug(reason);
                 singleChild.changeToBlack();
                 return {
-                    'change': [singleChild], 'blance': false, 'replace': this, reason: reason, ca: ca,
+                    'change': [singleChild], 'balance': false, 'replace': this, reason: reason, ca: ca,
                     operation: operation, op: 'delete'
                 };
             }
             // if (this.parent == null) {
             //     let reason = `替换点(${this.id})为根节点，且有一个空的子节点，可以直接删除`;
             //     let operation = `五`;
-            //     return { 'blance': false, 'replace': this, reason: reason, operation: operation, focus: focus, op: 'delete' };
+            //     return { 'balance': false, 'replace': this, reason: reason, operation: operation, focus: focus, op: 'delete' };
             // }
-            let reason = message.generateDeleteBlanceMsgSimple(3, 're', [this.id]);
-            let operation = message.generateDeleteBlanceMsgSimple(3, 'op', [this.id]);
-            let ca = message.generateDeleteBlanceMsgSimple(3, 'ca');
+            let reason = message.generateDeleteBalanceMsgSimple(3, 're', [this.id]);
+            let operation = message.generateDeleteBalanceMsgSimple(3, 'op', [this.id]);
+            let ca = message.generateDeleteBalanceMsgSimple(3, 'ca');
             return {
-                'blance': true, 'replace': this, reason: reason,
+                'balance': true, 'replace': this, reason: reason,
                 ca: ca, operation: operation, focus: focus, op: 'delete'
             };
         }
     }
 
-    blanceSubTreeAfterDelete() {
+    balanceSubTreeAfterDelete() {
         let parent = this.parent;
         if (parent == null) {
             this._debug(`平衡点为根节点，平衡完成`);
-            let reason = message.generateDeleteBlanceMsgComplex(1, 're');
-            // let operation = message.generateDeleteBlanceMsgComplex(1, 'op', [this.id]);
-            let ca = message.generateDeleteBlanceMsgComplex(1, 'ca');
+            let reason = message.generateDeleteBalanceMsgComplex(1, 're');
+            // let operation = message.generateDeleteBalanceMsgComplex(1, 'op', [this.id]);
+            let ca = message.generateDeleteBalanceMsgComplex(1, 'ca');
             return { reason: reason, ca: ca, focus: [{ node: this }], op: 'delete' };;
         }
         let bro = parent.left == this ? parent.right : parent.left;
@@ -181,10 +181,10 @@ export default class TreeNode {
             let rotated = [];
             rotated.push({ 'node': parent, 'left': isleft });
 
-            let reason = message.generateDeleteBlanceMsgComplex(2, 're');
-            let operation = message.generateDeleteBlanceMsgComplex(2, 'op',
+            let reason = message.generateDeleteBalanceMsgComplex(2, 're');
+            let operation = message.generateDeleteBalanceMsgComplex(2, 'op',
                 [parent.id, bro.id, this.id, `${isleft ? '左' : '右'}`]);
-            let ca = message.generateDeleteBlanceMsgComplex(2, 'ca');
+            let ca = message.generateDeleteBalanceMsgComplex(2, 'ca');
 
             let result = {
                 ca: ca,
@@ -206,9 +206,9 @@ export default class TreeNode {
                 if ((bro.left == null || bro.left.isBlack) && (bro.right == null || bro.right.isBlack)) {
                     bro.changeToRed();
 
-                    let reason = message.generateDeleteBlanceMsgComplex(3, 're');
-                    let operation = message.generateDeleteBlanceMsgComplex(3, 'op', [bro.id, parent.id]);
-                    let ca = message.generateDeleteBlanceMsgComplex(3, 'ca');
+                    let reason = message.generateDeleteBalanceMsgComplex(3, 're');
+                    let operation = message.generateDeleteBalanceMsgComplex(3, 'op', [bro.id, parent.id]);
+                    let ca = message.generateDeleteBalanceMsgComplex(3, 'ca');
 
                     this._debug(operation);
                     return {
@@ -221,9 +221,9 @@ export default class TreeNode {
                     parent.changeToBlack();
                     bro.changeToRed();
 
-                    // let reason = message.generateDeleteBlanceMsgComplex(4, 're');
-                    let operation = message.generateDeleteBlanceMsgComplex(4, 'op', [bro.id, parent.id]);
-                    let ca = message.generateDeleteBlanceMsgComplex(4, 'ca');
+                    // let reason = message.generateDeleteBalanceMsgComplex(4, 're');
+                    let operation = message.generateDeleteBalanceMsgComplex(4, 'op', [bro.id, parent.id]);
+                    let ca = message.generateDeleteBalanceMsgComplex(4, 'ca');
 
                     this._debug(operation);
                     return {
@@ -239,10 +239,10 @@ export default class TreeNode {
                 bro.changeToRed();
                 sameForwardBC.changeToBlack();
 
-                let reason = message.generateDeleteBlanceMsgComplex(5, 're');
-                let operation = message.generateDeleteBlanceMsgComplex(5, 'op',
+                let reason = message.generateDeleteBalanceMsgComplex(5, 're');
+                let operation = message.generateDeleteBalanceMsgComplex(5, 'op',
                     [bro.id, sameForwardBC.id, this.id, `${!isleft ? '左' : '右'}`]);
-                let ca = message.generateDeleteBlanceMsgComplex(5, 'ca');
+                let ca = message.generateDeleteBalanceMsgComplex(5, 'ca');
 
                 let rotated = [];
                 rotated.push({ 'node': bro, 'left': !isleft });
@@ -270,10 +270,10 @@ export default class TreeNode {
                 if (!(bb && bro.isBlack)) { change.push(bro); focus.push({ node: bro }); }
                 let rotated = [];
 
-                // let reason = message.generateDeleteBlanceMsgComplex(6, 're');
-                let operation = message.generateDeleteBlanceMsgComplex(6, 'op',
+                // let reason = message.generateDeleteBalanceMsgComplex(6, 're');
+                let operation = message.generateDeleteBalanceMsgComplex(6, 'op',
                     [bro.id, parent.id, diffForwardBC.id, `${isleft ? '左' : '右'}`]);
-                let ca = message.generateDeleteBlanceMsgComplex(6, 'ca');
+                let ca = message.generateDeleteBalanceMsgComplex(6, 'ca');
 
                 rotated.push({ 'node': parent, 'left': isleft });
                 let effected = parent.rotate(isleft);
@@ -361,7 +361,7 @@ export default class TreeNode {
                     this._debug(`找到插入位置，插入节点${node.toString()}作为左节点`);
                     TreeNode.createConnection(this, node);
                     return node;
-                    // return node.blanceSubTree();
+                    // return node.balanceSubTree();
                 }
             } else {
                 if (this.right != null) {
@@ -370,18 +370,18 @@ export default class TreeNode {
                     this._debug(`找到插入位置，插入节点${node.toString()}作为右节点`);
                     TreeNode.createConnection(this, node, false);
                     return node;
-                    // return node.blanceSubTree();
+                    // return node.balanceSubTree();
                 }
             }
         }
     }
 
 
-    blanceSubTreeAfterInsert(changedNodes = []) {
+    balanceSubTreeAfterInsert(changedNodes = []) {
         if (this.parent == null) {
             // 根节点必须是黑色
             if (this.isBlack) {
-                let reason = message.generateInsertBlanceMsg(1, 're');
+                let reason = message.generateInsertBalanceMsg(1, 're');
                 return { reason: reason, op: 'insert' };
             }
             this._debug('平衡子树 : ');
@@ -389,32 +389,32 @@ export default class TreeNode {
             this.changeToBlack();
             changedNodes.push(this);
 
-            let reason = message.generateInsertBlanceMsg(2, 're');
-            let operation = message.generateInsertBlanceMsg(2, 'op', [this.id]);
+            let reason = message.generateInsertBalanceMsg(2, 're');
+            let operation = message.generateInsertBalanceMsg(2, 'op', [this.id]);
 
             return { 'change': changedNodes, reason: reason, operation: operation, op: 'insert', focus: [{ node: this }] };
         }
         if (this.isBlack) return null;
         this._debug('平衡子树 : ');
         if (this.parent.isBlack) {
-            // let reason = message.generateInsertBlanceMsg(3, 're');
-            // let operation = message.generateInsertBlanceMsg(3, 'op', [this.id]);
-            let ca = message.generateInsertBlanceMsg(3, 'ca');
+            // let reason = message.generateInsertBalanceMsg(3, 're');
+            // let operation = message.generateInsertBalanceMsg(3, 'op', [this.id]);
+            let ca = message.generateInsertBalanceMsg(3, 'ca');
             this._debug(ca);
             return { ca: ca, op: 'insert', focus: [{ node: this }] };
         }
         var grande = this.parent.parent;
         if (grande == null) {
-            throw 'Blance sub-tree error, grande node can not be null';
+            throw 'Balance sub-tree error, grande node can not be null';
         }
         var _pbro = grande.left == this.parent ? grande.right : grande.left;
         var leftParent = grande.left == this.parent;
         var isleft = this.parent.left == this;
         if (_pbro != null && _pbro.isRed) {
 
-            // let reason = message.generateInsertBlanceMsg(4, 're');
-            let operation = message.generateInsertBlanceMsg(4, 'op', [grande.id, this.parent.id, _pbro.id]);
-            let ca = message.generateInsertBlanceMsg(4, 'ca');
+            // let reason = message.generateInsertBalanceMsg(4, 're');
+            let operation = message.generateInsertBalanceMsg(4, 'op', [grande.id, this.parent.id, _pbro.id]);
+            let ca = message.generateInsertBalanceMsg(4, 'ca');
 
             this._debug(operation);
 
@@ -437,18 +437,18 @@ export default class TreeNode {
             let operation, reason;
             if (leftParent != isleft) {
 
-                reason = message.generateInsertBlanceMsg(5, 're');
-                operation = message.generateInsertBlanceMsg(5, 'op', [this.parent.id, `${isleft ? '右' : '左'}`]);
-                ca = message.generateInsertBlanceMsg(5, 'ca');
+                reason = message.generateInsertBalanceMsg(5, 're');
+                operation = message.generateInsertBalanceMsg(5, 'op', [this.parent.id, `${isleft ? '右' : '左'}`]);
+                ca = message.generateInsertBalanceMsg(5, 'ca');
 
                 this._debug(operation);
                 rotated.push({ 'node': this.parent, 'left': !isleft });
                 effected = this.parent.rotate(!isleft);
             } else {
 
-                // reason = message.generateInsertBlanceMsg(5, 're');
-                operation = message.generateInsertBlanceMsg(6, 'op', [grande.id, this.parent.id, `${leftParent ? '右' : '左'}`]);
-                ca = message.generateInsertBlanceMsg(6, 'ca');
+                // reason = message.generateInsertBalanceMsg(5, 're');
+                operation = message.generateInsertBalanceMsg(6, 'op', [grande.id, this.parent.id, `${leftParent ? '右' : '左'}`]);
+                ca = message.generateInsertBalanceMsg(6, 'ca');
 
                 this._debug(operation);
                 this.parent.changeToBlack();

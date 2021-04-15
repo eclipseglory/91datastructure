@@ -16,7 +16,7 @@
       </div>
       <div class="toast-body">
         <div id="message-container">
-          <div v-if="hasInsertNode" id="blance-node" class="border-bottom">
+          <div v-if="hasInsertNode" id="balance-node" class="border-bottom">
             <strong class="text-dark">{{
               $t(`${msgKey}insertNode`) + ":"
             }}</strong>
@@ -26,13 +26,13 @@
             v-if="hasDeleteNode && hasReplaceNode"
             class="node-text-container"
           >
-            <div id="blance-node" class="border-bottom">
+            <div id="balance-node" class="border-bottom">
               <strong class="text-dark">{{
                 $t(`${msgKey}deleteNode`) + ":"
               }}</strong>
               <small style="margin-left: 5px">{{ deleteNodeText }}</small>
             </div>
-            <div id="blance-node" style="justify-content: flex-end">
+            <div id="balance-node" style="justify-content: flex-end">
               <strong class="text-dark">{{
                 $t(`${msgKey}replaceNode`) + ":"
               }}</strong>
@@ -40,34 +40,34 @@
             </div>
           </div>
           <div class="node-text-container">
-            <div id="blance-node" class="border-bottom">
+            <div id="balance-node" class="border-bottom">
               <strong class="text-dark"
-                >{{ $t(`${msgKey}currentBlance`) + ":" }}
+                >{{ $t(`${msgKey}currentBalance`) + ":" }}
               </strong>
-              <small style="margin-left: 5px">{{ currentBlanceText }}</small>
+              <small style="margin-left: 5px">{{ currentBalanceText }}</small>
             </div>
-            <div id="blance-node" style="justify-content: flex-end">
+            <div id="balance-node" style="justify-content: flex-end">
               <strong class="text-dark"
-                >{{ $t(`${msgKey}nextBlance`) + ":" }}
+                >{{ $t(`${msgKey}nextBalance`) + ":" }}
               </strong>
-              <small style="margin-left: 5px">{{ nextBlanceText }}</small>
+              <small style="margin-left: 5px">{{ nextBalanceText }}</small>
             </div>
           </div>
-          <div v-if="!nullCase" id="blance-operation" class="border-bottom">
+          <div v-if="!nullCase" id="balance-operation" class="border-bottom">
             <div class="text-primary">
               <i class="fas fa-tasks" style="margin-right: 0.2em"></i
               ><strong>{{ $t(`${msgKey}case`) + ":" }}</strong>
             </div>
             <small><div v-html="ca" /></small>
           </div>
-          <div v-if="!nullOp" id="blance-reason" class="border-bottom">
+          <div v-if="!nullOp" id="balance-reason" class="border-bottom">
             <div class="text-primary">
               <i class="far fa-bell" style="margin-right: 0.2em"></i>
               <strong>{{ $t(`${msgKey}process`) + ":" }}</strong>
             </div>
             <small><div v-html="operation" /></small>
           </div>
-          <div v-if="!nullReason" id="blance-operation">
+          <div v-if="!nullReason" id="balance-operation">
             <div class="text-primary">
               <i class="far fa-question-circle" style="margin-right: 0.2em"></i>
               <strong>{{ $t(`${msgKey}reason`) + ":" }}</strong>
@@ -130,8 +130,8 @@ export default {
 
     showTip(event) {
       this.currentCount = this.waitTime;
-      this.currentBlance = event.current;
-      this.blance = event.blance;
+      this.currentBalance = event.current;
+      this.balance = event.balance;
       this.toast.show();
       this.pause = false;
       this._startCount();
@@ -141,8 +141,8 @@ export default {
       if (this.intervalId != null) {
         clearTimeout(this.intervalId);
       }
-      this.currentBlance = null;
-      this.blance = null;
+      this.currentBalance = null;
+      this.balance = null;
       this.toast.hide();
     },
 
@@ -163,84 +163,90 @@ export default {
     },
 
     hasDeleteNode() {
-      return this.blance != null && this.blance.deleteNode != null;
+      return this.balance != null && this.balance.deleteNode != null;
     },
 
     hasReplaceNode() {
-      return this.blance != null && this.blance.replaceNode != null;
+      return this.balance != null && this.balance.replaceNode != null;
     },
 
     hasInsertNode() {
-      return this.blance != null && this.blance.insertNode != null;
+      return this.balance != null && this.balance.insertNode != null;
     },
 
     deleteNodeText() {
       if (this.hasDeleteNode) {
-        return this.blance.deleteNode.id;
+        return this.balance.deleteNode.id;
       }
     },
 
     replaceNodeText() {
       if (this.hasReplaceNode) {
-        return this.blance.replaceNode.id;
+        return this.balance.replaceNode.id;
       }
     },
 
     insertNodeText() {
       if (this.hasInsertNode) {
-        return this.blance.insertNode.id;
+        return this.balance.insertNode.id;
       }
     },
 
-    currentBlanceText() {
-      if (this.currentBlance == null) return "";
-      return this.currentBlance.id;
+    currentBalanceText() {
+      if (this.currentBalance == null) return "";
+      return this.currentBalance.id;
     },
 
-    nextBlanceText() {
-      if (this.blance == null) return "";
-      if (this.blance.next == null) return this.$t(`${this.msgKey}none`);
-      return this.blance.next.id;
+    nextBalanceText() {
+      if (this.balance == null) return "";
+      if (this.balance.next == null) return this.$t(`${this.msgKey}none`);
+      return this.balance.next.id;
     },
 
     tipTitle() {
-      if (this.blance == null) return "";
-      if (this.blance.next == null)
-        return { msg: this.$t(`${this.msgKey}blanced`), color: "text-success" };
-      return { msg: this.$t(`${this.msgKey}notblanced`), color: "text-danger" };
+      if (this.balance == null) return "";
+      if (this.balance.next == null)
+        return {
+          msg: this.$t(`${this.msgKey}balanced`),
+          color: "text-success",
+        };
+      return {
+        msg: this.$t(`${this.msgKey}notbalanced`),
+        color: "text-danger",
+      };
     },
 
     tipName() {
-      if (this.blance == null) return "";
-      if (this.blance.op == "insert")
-        return this.$t(`${this.msgKey}insertBlanceOp`);
-      return this.$t(`${this.msgKey}deleteBlanceOp`);
+      if (this.balance == null) return "";
+      if (this.balance.op == "insert")
+        return this.$t(`${this.msgKey}insertBalanceOp`);
+      return this.$t(`${this.msgKey}deleteBalanceOp`);
     },
 
     nullReason() {
-      if (this.blance == null) return true;
-      let reason = this.blance.reason;
+      if (this.balance == null) return true;
+      let reason = this.balance.reason;
       if (reason == null || reason.length == 0) return true;
       return false;
     },
 
     nullOp() {
-      if (this.blance == null) return true;
-      let operation = this.blance.operation;
+      if (this.balance == null) return true;
+      let operation = this.balance.operation;
       if (operation == null || operation.length == 0) return true;
       return false;
     },
 
     nullCase() {
-      if (this.blance == null) return true;
-      let ca = this.blance.ca;
+      if (this.balance == null) return true;
+      let ca = this.balance.ca;
       if (ca == null || ca.length == 0) return true;
       return false;
     },
 
     reason() {
       if (this.nullReason) return "";
-      let re = this.blance.reason;
+      let re = this.balance.reason;
       //text-muted
       re = re.replaceAll(
         this.$t(`${this.msgKey}redKey`),
@@ -258,7 +264,7 @@ export default {
     },
     ca() {
       if (this.nullCase) return "";
-      let ca = this.blance.ca;
+      let ca = this.balance.ca;
       ca = ca.replaceAll(
         this.$t(`${this.msgKey}redKey`),
         `<span class="text-danger" style="font-weight:bold">${this.$t(
@@ -276,7 +282,7 @@ export default {
 
     operation() {
       if (this.nullOp) return "";
-      let op = this.blance.operation;
+      let op = this.balance.operation;
       op = op.replaceAll(
         this.$t(`${this.msgKey}lRotateKey`),
         `<span class="text-primary" style="font-weight:bold">${this.$t(
@@ -309,8 +315,8 @@ export default {
     return {
       pause: false,
       currentCount: 0,
-      blance: null,
-      currentBlance: null,
+      balance: null,
+      currentBalance: null,
       msgKey: "default.tip.",
     };
   },
@@ -337,7 +343,7 @@ export default {
   justify-content: space-between;
 }
 
-#blance-node {
+#balance-node {
   display: flex;
   width: 100%;
   justify-content: flex-start;
@@ -356,11 +362,11 @@ export default {
   width: 100%;
 }
 
-#blance-reason {
+#balance-reason {
   margin-top: 10px;
 }
 
-#blance-operation {
+#balance-operation {
   margin-top: 10px;
   margin-bottom: 10px;
 }

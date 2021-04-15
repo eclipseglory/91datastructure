@@ -1,7 +1,7 @@
 <template>
   <div id="canvas-group">
     <canvas id="canvas"></canvas>
-    <Tip ref="blanceTip" @next-step="blanceNextStep" :waitTime="6" />
+    <Tip ref="balanceTip" @next-step="balanceNextStep" :waitTime="6" />
     <div
       id="result-tip"
       class="toast align-items-center text-white border-0 position-absolute"
@@ -58,7 +58,7 @@ export default {
       tipIcon: "fas fa-check-circle",
     };
   },
-  emits: ["operation:start", "operation:over", "blance:start", "blance:over"],
+  emits: ["operation:start", "operation:over", "balance:start", "balance:over"],
 
   methods: {
     generate(n) {
@@ -89,7 +89,7 @@ export default {
       this.tip.show();
     },
 
-    blanceNextStep() {
+    balanceNextStep() {
       if (this.animationController) {
         this.animationController._nextStep();
       }
@@ -128,13 +128,13 @@ export default {
       this.$emit("operation:over", event);
     },
 
-    fireBlanceStart(event) {
-      this.$refs.blanceTip.showTip(event);
-      this.$emit("blance:start", event);
+    fireBalanceStart(event) {
+      this.$refs.balanceTip.showTip(event);
+      this.$emit("balance:start", event);
     },
 
-    fireBlanceOver(event) {
-      this.$emit("blance:over", event);
+    fireBalanceOver(event) {
+      this.$emit("balance:over", event);
     },
   },
   mounted() {
@@ -179,15 +179,15 @@ export default {
     );
     this.animationController.on("operationStart", this.fireOperationStart);
     this.animationController.on("operationOver", this.fireOperationOver);
-    this.animationController.on("blanceStepOver", this.fireBlanceOver);
-    this.animationController.on("blanceStepStart", this.fireBlanceStart);
+    this.animationController.on("balanceStepOver", this.fireBalanceOver);
+    this.animationController.on("balanceStepStart", this.fireBalanceStart);
   },
 };
 </script>
 
 <style>
 #canvas-group {
-  background-color: #F8F9FA;
+  background-color: #f8f9fa;
   width: 100%;
   height: 100%;
   position: relative;

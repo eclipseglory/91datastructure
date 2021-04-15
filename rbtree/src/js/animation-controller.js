@@ -24,12 +24,12 @@ export default class AnimationController {
     }
 
     on(eventName, handler) {
-        if ('blanceStepOver' == eventName) {
-            this._blanceOverHandler = handler;
+        if ('balanceStepOver' == eventName) {
+            this._balanceCompleteHandler = handler;
             return;
         }
-        if ('blanceStepStart' == eventName) {
-            this._blanceStartHandler = handler;
+        if ('balanceStepStart' == eventName) {
+            this._balanceStartHandler = handler;
             return;
         }
         let handlers = this._eventHandler[eventName];
@@ -40,15 +40,15 @@ export default class AnimationController {
         handlers.push(handler);
     }
 
-    _fireBlanceStepStart(event) {
-        if (this._blanceStartHandler) {
-            return this._blanceStartHandler(event);
+    _fireBalanceStepStart(event) {
+        if (this._balanceStartHandler) {
+            return this._balanceStartHandler(event);
         }
     }
 
-    _fireBlanceStepOver() {
-        if (this._blanceOverHandler) {
-            return this._blanceOverHandler();
+    _fireBalanceStepOver() {
+        if (this._balanceCompleteHandler) {
+            return this._balanceCompleteHandler();
         }
     }
 
@@ -86,9 +86,9 @@ export default class AnimationController {
                     continue;
                 } else {
                     this.recordId(id);
-                    let blance = newNode.blanceSubTreeAfterInsert();
-                    while (blance != null && blance.next != null) {
-                        blance = blance.next.blanceSubTreeAfterInsert();
+                    let balance = newNode.balanceSubTreeAfterInsert();
+                    while (balance != null && balance.next != null) {
+                        balance = balance.next.balanceSubTreeAfterInsert();
                     }
                 }
             }
@@ -146,7 +146,7 @@ export default class AnimationController {
         if (node != null) {
             let result = node.findReplaceNode();
             let replace = result.replace;
-            let blance = result.blance;
+            let balance = result.balance;
             console.log(`删除节点${node}:替换节点${replace}`);
             let focus = [];
             focus.push({ node: replace, color: ColorSchema.getFocusColor() });
@@ -162,13 +162,13 @@ export default class AnimationController {
             result['focus'] = focus;
             result.replaceNode = replace;
             result.deleteNode = node;
-            let op = Message.generateDeleteBlanceAdditionalMsg(1, [replace.id, node.id])
+            let op = Message.generateDeleteBalanceAdditionalMsg(1, [replace.id, node.id])
             if (replace.id == node.id) {
-                op = Message.generateDeleteBlanceAdditionalMsg(2, [replace.id]);
+                op = Message.generateDeleteBalanceAdditionalMsg(2, [replace.id]);
             }
-            if (blance) {
-                this.blanceAfterDelete(replace, node, replace).then(() => {
-                    op = Message.generateDeleteBlanceAdditionalMsg(3) + op;
+            if (balance) {
+                this.balanceAfterDelete(replace, node, replace).then(() => {
+                    op = Message.generateDeleteBalanceAdditionalMsg(3) + op;
                     this._deleteReplaceNode(replace, node, {
                         focus: focus,
                         deleteNode: node,
@@ -195,10 +195,10 @@ export default class AnimationController {
         }
     }
 
-    _deleteReplaceNode(replace, target, blance) {
+    _deleteReplaceNode(replace, target, balance) {
         return new Promise((resolve, reject) => {
             this._excuteProcessAnimated(target, () => {
-                return blance;
+                return balance;
             }, () => {
                 let animation = new MyAnimation(500, { x1: 0.37, y1: -0.47, x2: 0.61, y2: 1.45 });
                 animation.add(replace, 'scale', 1, 0);
@@ -252,7 +252,7 @@ export default class AnimationController {
         if (node == null) { this._fireOperationOver({ op: 'update', id: id, type: 'warning' }); return null; }
         this.recordId(id);
         this._refreshTreeAnimated(node).then(() => {
-            return this.blanceAfterInsert(node, node);
+            return this.balanceAfterInsert(node, node);
         }).then(() => {
             this._fireOperationOver({ op: 'insert', id: id, type: 'success' });
         });
@@ -301,17 +301,17 @@ export default class AnimationController {
         })
     }
 
-    blanceAfterDelete(node, deleteNode, replaceNode) {
+    balanceAfterDelete(node, deleteNode, replaceNode) {
         return this._excuteProcessAnimated(node, function (node) {
-            let blance = node.blanceSubTreeAfterDelete();
-            blance.deleteNode = deleteNode;
-            blance.replaceNode = replaceNode;
-            if (blance.focus) {
+            let balance = node.balanceSubTreeAfterDelete();
+            balance.deleteNode = deleteNode;
+            balance.replaceNode = replaceNode;
+            if (balance.focus) {
                 let contains = false;
                 let contains2 = false;
                 let contains3 = false;
-                for (let index = 0; index < blance.focus.length; index++) {
-                    const element = blance.focus[index];
+                for (let index = 0; index < balance.focus.length; index++) {
+                    const element = balance.focus[index];
                     if (element.id == deleteNode.id) {
                         element['color'] = ColorSchema.getFocusColor();
                         contains = true;
@@ -329,46 +329,46 @@ export default class AnimationController {
                     }
                 }
                 if (!contains) {
-                    blance.focus.push({ node: deleteNode, color: ColorSchema.getFocusColor() });
+                    balance.focus.push({ node: deleteNode, color: ColorSchema.getFocusColor() });
                 }
                 if (!contains2 && deleteNode.id != replaceNode.id) {
-                    blance.focus.push({ node: replaceNode, color: ColorSchema.getSecondColor() });
+                    balance.focus.push({ node: replaceNode, color: ColorSchema.getSecondColor() });
                 }
 
                 if (!contains3 && deleteNode.id != node.id && replaceNode.id != node.id) {
-                    blance.focus.push({ node: node, color: ColorSchema.getLightSecondColor() });
+                    balance.focus.push({ node: node, color: ColorSchema.getLightSecondColor() });
                 }
             }
-            return blance;
+            return balance;
         });
     }
 
     _nextStep() {
-        if (this._blanceEffectAnimation) {
-            this._blanceEffectAnimation.loop = false; // 不强制停止
+        if (this._balanceEffectAnimation) {
+            this._balanceEffectAnimation.loop = false; // 不强制停止
             // 停止动画后会主动resolve一个promise进入下一步
         }
     }
 
-    _excuteProcessAnimated(node, blanceFunction, completeHandler, refreshTree = true) {
+    _excuteProcessAnimated(node, balanceFunction, completeHandler, refreshTree = true) {
         return new Promise((resolve, reject) => {
-            if (node == null || blanceFunction == null) {
+            if (node == null || balanceFunction == null) {
                 if (completeHandler) completeHandler();
                 return resolve();
             }
-            let blance = blanceFunction(node);
-            if (blance == null) {
+            let balance = balanceFunction(node);
+            if (balance == null) {
                 if (completeHandler) completeHandler();
                 return resolve();
             }
             this.fadeInEffectLayer().then(() => {
-                let animation = this._createBlanceStepEffectAnimation(blance.focus, blance);
+                let animation = this._createBalanceStepEffectAnimation(balance.focus, balance);
                 animation.loop = true;
                 animation.loopWithReverse = true;
-                this._blanceEffectAnimation = animation;
-                this._fireBlanceStepStart({
+                this._balanceEffectAnimation = animation;
+                this._fireBalanceStepStart({
                     current: node,
-                    blance: blance
+                    balance: balance
                 });
                 return new Promise((r, rej) => {
                     animation.forward(() => this.effectLayer.draw()).then(() => {
@@ -376,23 +376,23 @@ export default class AnimationController {
                     });
                 });
             }).then(() => {
-                this._blanceEffectAnimation = null;
-                this._fireBlanceStepOver();
+                this._balanceEffectAnimation = null;
+                this._fireBalanceStepOver();
                 this.effectLayer.clean();
                 return this.fadeOutEffectLayer();
             }).then(() => {
                 if (refreshTree) {
-                    return this._refreshTreeAnimated(null, blance.effected, blance.change);
+                    return this._refreshTreeAnimated(null, balance.effected, balance.change);
                 }
             }).then(() => {
-                var next = blance.next;
+                var next = balance.next;
                 if (next == null) {
                     this.effectLayer.clean();
                     if (completeHandler) completeHandler();
                     return resolve();
                 }
                 setTimeout(() => {
-                    this._excuteProcessAnimated(next, blanceFunction, completeHandler, refreshTree).then(() => {
+                    this._excuteProcessAnimated(next, balanceFunction, completeHandler, refreshTree).then(() => {
                         resolve();
                     });
                 }, 500);
@@ -400,7 +400,7 @@ export default class AnimationController {
         });
     }
 
-    _createBlanceStepEffectAnimation(focusNodes, blanceResult) {
+    _createBalanceStepEffectAnimation(focusNodes, balanceResult) {
         let animation = new MyAnimation(600);
         if (focusNodes != null) {
             focusNodes.forEach((focusNode) => {
@@ -410,15 +410,15 @@ export default class AnimationController {
             });
         }
 
-        if (blanceResult.change) {
-            blanceResult.change.forEach((n) => {
+        if (balanceResult.change) {
+            balanceResult.change.forEach((n) => {
                 let cc = new ColorChange(n);
                 this.effectLayer.add(cc);
                 animation.add(cc, 'opacity', 0, 1);
             });
         }
-        if (blanceResult.rotated) {
-            blanceResult.rotated.forEach((rotate) => {
+        if (balanceResult.rotated) {
+            balanceResult.rotated.forEach((rotate) => {
                 let left = rotate.left;
                 let n = rotate.node;
                 let r = new Rotate(n, left);
@@ -429,15 +429,15 @@ export default class AnimationController {
         return animation;
     }
 
-    blanceAfterInsert(node, insertNode) {
+    balanceAfterInsert(node, insertNode) {
         return this._excuteProcessAnimated(node, function (node) {
-            let blance = node.blanceSubTreeAfterInsert();
-            blance.insertNode = insertNode;
-            if (blance.focus) {
+            let balance = node.balanceSubTreeAfterInsert();
+            balance.insertNode = insertNode;
+            if (balance.focus) {
                 let contains = false;
                 let contains2 = false;
-                for (let index = 0; index < blance.focus.length; index++) {
-                    const element = blance.focus[index];
+                for (let index = 0; index < balance.focus.length; index++) {
+                    const element = balance.focus[index];
                     if (element.id == insertNode.id) {
                         element['color'] = ColorSchema.getFocusColor();
                         contains = true;
@@ -450,13 +450,13 @@ export default class AnimationController {
                     }
                 }
                 if (!contains) {
-                    blance.focus.push({ node: insertNode, color: ColorSchema.getFocusColor() });
+                    balance.focus.push({ node: insertNode, color: ColorSchema.getFocusColor() });
                 }
                 if (!contains2 && insertNode.id != node.id) {
-                    blance.focus.push({ node: node, color: ColorSchema.getSecondColor() });
+                    balance.focus.push({ node: node, color: ColorSchema.getSecondColor() });
                 }
             }
-            return blance;
+            return balance;
         });
     }
 
