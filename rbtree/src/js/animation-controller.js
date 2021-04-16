@@ -149,9 +149,9 @@ export default class AnimationController {
             let balance = result.balance;
             console.log(`删除节点${node}:替换节点${replace}`);
             let focus = [];
-            focus.push({ node: replace, color: ColorSchema.getFocusColor() });
+            focus.push({ node: replace, color: ColorSchema.getFocusColorHex() });
             if (replace.id != node.id) {
-                focus.push({ node: node, color: ColorSchema.getSecondColor() });
+                focus.push({ node: node, color: ColorSchema.getSecondColorHex() });
             }
 
             // 特殊情况，让某些颜色变换点闪烁：
@@ -313,30 +313,30 @@ export default class AnimationController {
                 for (let index = 0; index < balance.focus.length; index++) {
                     const element = balance.focus[index];
                     if (element.id == deleteNode.id) {
-                        element['color'] = ColorSchema.getFocusColor();
+                        element['color'] = ColorSchema.getFocusColorHex();
                         contains = true;
                         break;
                     }
                     if (element.id == replaceNode.id) {
                         contains2 = true;
-                        element['color'] = ColorSchema.getSecondColor();
+                        element['color'] = ColorSchema.getSecondColorHex();
                         break;
                     }
                     if (element.id == node.id) {
                         contains3 = true;
-                        element['color'] = ColorSchema.getLightSecondColor();
+                        element['color'] = ColorSchema.getLightSecondColorHex();
                         break;
                     }
                 }
                 if (!contains) {
-                    balance.focus.push({ node: deleteNode, color: ColorSchema.getFocusColor() });
+                    balance.focus.push({ node: deleteNode, color: ColorSchema.getFocusColorHex() });
                 }
                 if (!contains2 && deleteNode.id != replaceNode.id) {
-                    balance.focus.push({ node: replaceNode, color: ColorSchema.getSecondColor() });
+                    balance.focus.push({ node: replaceNode, color: ColorSchema.getSecondColorHex() });
                 }
 
                 if (!contains3 && deleteNode.id != node.id && replaceNode.id != node.id) {
-                    balance.focus.push({ node: node, color: ColorSchema.getLightSecondColor() });
+                    balance.focus.push({ node: node, color: ColorSchema.getLightSecondColorHex() });
                 }
             }
             return balance;
@@ -439,21 +439,21 @@ export default class AnimationController {
                 for (let index = 0; index < balance.focus.length; index++) {
                     const element = balance.focus[index];
                     if (element.id == insertNode.id) {
-                        element['color'] = ColorSchema.getFocusColor();
+                        element['color'] = ColorSchema.getFocusColorHex();
                         contains = true;
                         break;
                     }
                     if (element.id == node.id) {
-                        element['color'] = ColorSchema.getSecondColor();
+                        element['color'] = ColorSchema.getSecondColorHex();
                         contains2 = true;
                         break;
                     }
                 }
                 if (!contains) {
-                    balance.focus.push({ node: insertNode, color: ColorSchema.getFocusColor() });
+                    balance.focus.push({ node: insertNode, color: ColorSchema.getFocusColorHex() });
                 }
                 if (!contains2 && insertNode.id != node.id) {
-                    balance.focus.push({ node: node, color: ColorSchema.getSecondColor() });
+                    balance.focus.push({ node: node, color: ColorSchema.getSecondColorHex() });
                 }
             }
             return balance;

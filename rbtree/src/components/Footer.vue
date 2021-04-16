@@ -4,8 +4,13 @@
     <div id="center" class="text-light">
       <small
         >Developed by
-        <a id="developer" href="#" title="Developer's blog,if he had">老脸</a>
-        (v2021.4.15)</small
+        <a
+          id="developer"
+          :href="$root.$AUTHOR.url"
+          title="Developer's blog,if he had"
+          >{{ $root.$AUTHOR.name }}</a
+        >
+        (v{{ $root.$VERSION }})</small
       >
     </div>
     <div id="left">

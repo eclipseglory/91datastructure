@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="bg-light">
-    <Header @langChange="switchLang" :currentLang="currentLang" />
+    <Header />
     <MainSpace />
     <Footer />
   </div>
@@ -19,18 +19,14 @@ export default {
     Footer,
     MainSpace,
   },
-  data() {
-    return {
-      currentLang: "zh",
-    };
-  },
   created() {
     message.$t = this.$t;
-  },
-  methods: {
-    switchLang(lang) {
-      this.currentLang = lang;
-    },
+    this.$TEST = "TEST";
+    this.$VERSION = process.env.VUE_APP_VERSION;
+    this.$AUTHOR = {
+      name: process.env.VUE_APP_AUTHOR_MANE,
+      url: process.env.VUE_APP_AUTHOR_URL,
+    };
   },
 };
 </script>

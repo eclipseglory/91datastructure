@@ -35,4 +35,12 @@ export default class Message {
         let key = `default.message.insertBlance.case${caseKey}.${type}`;
         return this.$t(key, args);
     }
+
+    static generateRotateForward(isleft) {
+        if (this.$t == null) return '';
+        let key;
+        if (isleft) key = `default.rotate.left`;
+        else key = `default.rotate.right`
+        return this.$t(key);
+    }
 }

@@ -39,16 +39,16 @@ export default class ColorChange extends NodeDelegate {
         ctx.scale(0.8, 0.8);
         ctx.globalAlpha = this.opacity;
         let paths = this._getPaths();
-        ctx.strokeStyle = ColorSchema.getLineColor();
+        ctx.strokeStyle = ColorSchema.getLineColorHex();
         let linew = ctx.lineWidth;
         ctx.lineWidth = 3;
         ctx.stroke(paths[0]);
 
         ctx.lineWidth = linew;
-        ctx.fillStyle = ColorSchema.getBlackColorString();
+        ctx.fillStyle = ColorSchema.getBlackColorHex();
         ctx.fill(paths[1]);
         ctx.stroke(paths[1]);
-        ctx.fillStyle = ColorSchema.getRedColorString();
+        ctx.fillStyle = ColorSchema.getRedColorHex();
         ctx.fill(paths[2]);
         ctx.stroke(paths[2]);
         ctx.restore();

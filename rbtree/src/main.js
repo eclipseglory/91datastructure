@@ -11,6 +11,7 @@ const i18n = createI18n({
         en: require('./assets/i18n/en.js')
     }
 });
+
 const app = createApp(App);
 app.use(i18n);
 app.mount('#app');

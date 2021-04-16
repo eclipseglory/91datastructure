@@ -2,7 +2,7 @@ import ColorSchema from "../color-schema.js";
 import NodeDelegate from "./node-delegate.js";
 
 export default class FrontShadow extends NodeDelegate {
-    constructor(refNode, parent, shadowColor = ColorSchema.getLightColor()) {
+    constructor(refNode, parent, shadowColor = ColorSchema.getLightColorHex()) {
         super(refNode);
         this.parent = parent;
         this.radiusPercent = 1;
@@ -35,7 +35,7 @@ export default class FrontShadow extends NodeDelegate {
         ctx.shadowBlur = node.radius * 2 * this.parent.scale;
         ctx.shadowOffsetX = -ctx.canvas.width * this.parent.scale;
         ctx.shadowOffsetY = -ctx.canvas.height * this.parent.scale;
-        ctx.shadowColor = this.shadowColor;
+        ctx.shadowColor = ColorSchema.getRGBString(ColorSchema.hexToRgb(this.shadowColor), 0.8);
         ctx.fill(this._getPath());
         ctx.restore();
     }

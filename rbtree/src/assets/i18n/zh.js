@@ -1,4 +1,8 @@
 export default {
+    rotate: {
+        left: '左',
+        right: '右'
+    },
     title: {
         front: "红黑",
         next: "树",
@@ -11,7 +15,7 @@ export default {
         randomDelete: '随机删除',
         placeholder: '0-999',
         generate: '生成',
-        generateholder: '>100个节点'
+        generateholder: '<100'
     },
     main: {
         error1: "ID只能是0-999的数字",
@@ -36,8 +40,8 @@ export default {
         none: '无',
         balanced: '已平衡',
         notbalanced: '未平衡',
-        insertBalanceOp: '插入平衡操作',
-        deleteBalanceOp: '删除平衡操作',
+        insertBalanceOp: '插入节点',
+        deleteBalanceOp: '删除节点',
         redKey: '红色',
         blackKey: '黑色',
         rRotateKey: '右旋转',
@@ -65,9 +69,9 @@ export default {
                     re: '替换点({0})为红色节点，根据红黑树特点, 该节点的父节点必定是黑色, 且其子节点也必定为黑色(或者为空), 直接删除该节点({0})不会影响子树平衡'
                 },
                 case2: {
-                    re: '让替换点({0})的唯一红色子节点({1})改成黑色并代替替换点, 不会影响子树平衡.',
+                    re: '替换点({0})是黑色，并且有唯一一个红色子节点({1})。删除该替换点会让通过该点路径上的黑色节点数减1，所以如果将这个唯一的红色节点改成黑色并替换替换点, 就不会影响子树平衡.',
                     op: '将红色子节点({0})改为黑色',
-                    ca: '简单情景(2). 替换点为黑色, 且最多只有一个子节点, 并且该子节点是红色',
+                    ca: '简单情景(2). 替换点为黑色, 并且只有一个节点，而且是红色',
                 },
                 case3: {
                     re: '替换点({0})为黑色，直接删除会影响通过该节点路径上的黑色节点数目.',

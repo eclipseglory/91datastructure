@@ -234,7 +234,7 @@ export default class DrawableNode extends TreeNode {
             ctx.fill(this._getPath());
 
             ctx.restore();
-            ctx.fillStyle = ColorSchema.getBackGroundColor();
+            ctx.fillStyle = ColorSchema.getBackGroundColorHex();
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'center';
             ctx.font = `${Math.floor(this.radius * 0.9)}px Arial`;
@@ -258,7 +258,7 @@ export default class DrawableNode extends TreeNode {
         ctx.beginPath();
         ctx.moveTo(params.sx, params.sy);
         ctx.lineTo(params.ex, params.ey);
-        let lineColor = ColorSchema.getLineColor();
+        let lineColor = ColorSchema.getLineColorHex();
         ctx.strokeStyle = lineColor;
         ctx.fillStyle = lineColor;
         ctx.lineWidth = 2;
@@ -289,7 +289,8 @@ export default class DrawableNode extends TreeNode {
 
     changeToBlack() {
         this.recordOldColor();
-        let color = ColorSchema.getBlackColor();
+        let colorStr = ColorSchema.getBlackColorHex();
+        let color = ColorSchema.hexToRgb(colorStr);
         this.red = color.red;
         this.green = color.green;
         this.blue = color.blue;
@@ -298,7 +299,8 @@ export default class DrawableNode extends TreeNode {
 
     changeToRed() {
         this.recordOldColor();
-        let color = ColorSchema.getRedColor();
+        let colorStr = ColorSchema.getRedColorHex();
+        let color = ColorSchema.hexToRgb(colorStr);
         this.red = color.red;
         this.green = color.green;
         this.blue = color.blue;

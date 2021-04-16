@@ -15,7 +15,7 @@ export default class ColorSchema {
 
     static currentSchema = 'default';
 
-    static getFrontLineColor() {
+    static getFrontLineColorHex() {
         let colors = this.SCHEMAS[this.currentSchema];
         if (colors != null) {
             return colors.frontline;
@@ -23,7 +23,7 @@ export default class ColorSchema {
         return '#000000'
     }
 
-    static getFocusColor() {
+    static getFocusColorHex() {
         let colors = this.SCHEMAS[this.currentSchema];
         if (colors != null) {
             return colors.focus;
@@ -31,7 +31,7 @@ export default class ColorSchema {
         return '#000000'
     }
 
-    static getLightColor() {
+    static getLightColorHex() {
         let colors = this.SCHEMAS[this.currentSchema];
         if (colors != null) {
             return colors.light;
@@ -39,7 +39,7 @@ export default class ColorSchema {
         return '#000000'
     }
 
-    static getLightSecondColor() {
+    static getLightSecondColorHex() {
         let colors = this.SCHEMAS[this.currentSchema];
         if (colors != null) {
             return colors.lightsecond;
@@ -48,7 +48,7 @@ export default class ColorSchema {
     }
 
 
-    static getSecondColor() {
+    static getSecondColorHex() {
         let colors = this.SCHEMAS[this.currentSchema];
         if (colors != null) {
             return colors.second;
@@ -56,9 +56,7 @@ export default class ColorSchema {
         return '#000000'
     }
 
-
-
-    static getLineColor() {
+    static getLineColorHex() {
         let colors = this.SCHEMAS[this.currentSchema];
         if (colors != null) {
             return colors.line;
@@ -66,12 +64,7 @@ export default class ColorSchema {
         return '#000000'
     }
 
-    static getRedColor() {
-        let r = this.getRedColorString()
-        return this.hexToRgb(r);
-    }
-
-    static getRedColorString() {
+    static getRedColorHex() {
         let colors = this.SCHEMAS[this.currentSchema];
         if (colors != null) {
             return colors.red;
@@ -79,12 +72,7 @@ export default class ColorSchema {
         return '#ffffff';
     }
 
-    static getBlackColor() {
-        let str = this.getBlackColorString();
-        return this.hexToRgb(str);
-    }
-
-    static getBlackColorString() {
+    static getBlackColorHex() {
         let colors = this.SCHEMAS[this.currentSchema];
         if (colors != null) {
             return colors.black;
@@ -92,7 +80,7 @@ export default class ColorSchema {
         return '#000000';
     }
 
-    static getBackGroundColor() {
+    static getBackGroundColorHex() {
         let colors = this.SCHEMAS[this.currentSchema];
         if (colors != null) {
             return colors.bg;
@@ -116,4 +104,12 @@ export default class ColorSchema {
         }
         return color;
     }
+
+    static getRGBString(rgb, a) {
+        if (a != null) {
+            return `rgba(${rgb.red},${rgb.green},${rgb.blue},${a})`;
+        }
+        return `rgb(${rgb.red},${rgb.green},${rgb.blue})`;
+    }
+
 }

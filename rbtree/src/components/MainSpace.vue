@@ -34,10 +34,10 @@ export default {
   },
   methods: {
     invalidId(id) {
-      this.$refs.canvas.showError($t("default.main.error1"));
+      this.$refs.canvas.showError(this.$t("default.main.error1"));
     },
     invalidNum(id) {
-      this.$refs.canvas.showError($t("default.main.error2"));
+      this.$refs.canvas.showError(this.$t("default.main.error2"));
     },
     add(id) {
       this.$refs.canvas.add(id);

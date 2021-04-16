@@ -183,7 +183,7 @@ export default class TreeNode {
 
             let reason = message.generateDeleteBalanceMsgComplex(2, 're');
             let operation = message.generateDeleteBalanceMsgComplex(2, 'op',
-                [parent.id, bro.id, this.id, `${isleft ? '左' : '右'}`]);
+                [parent.id, bro.id, this.id, message.generateRotateForward(isleft)]);
             let ca = message.generateDeleteBalanceMsgComplex(2, 'ca');
 
             let result = {
@@ -241,7 +241,7 @@ export default class TreeNode {
 
                 let reason = message.generateDeleteBalanceMsgComplex(5, 're');
                 let operation = message.generateDeleteBalanceMsgComplex(5, 'op',
-                    [bro.id, sameForwardBC.id, this.id, `${!isleft ? '左' : '右'}`]);
+                    [bro.id, sameForwardBC.id, this.id, message.generateRotateForward(!isleft)]);
                 let ca = message.generateDeleteBalanceMsgComplex(5, 'ca');
 
                 let rotated = [];
@@ -272,7 +272,7 @@ export default class TreeNode {
 
                 // let reason = message.generateDeleteBalanceMsgComplex(6, 're');
                 let operation = message.generateDeleteBalanceMsgComplex(6, 'op',
-                    [bro.id, parent.id, diffForwardBC.id, `${isleft ? '左' : '右'}`]);
+                    [bro.id, parent.id, diffForwardBC.id, message.generateRotateForward(isleft)]);
                 let ca = message.generateDeleteBalanceMsgComplex(6, 'ca');
 
                 rotated.push({ 'node': parent, 'left': isleft });
@@ -438,7 +438,7 @@ export default class TreeNode {
             if (leftParent != isleft) {
 
                 reason = message.generateInsertBalanceMsg(5, 're');
-                operation = message.generateInsertBalanceMsg(5, 'op', [this.parent.id, `${isleft ? '右' : '左'}`]);
+                operation = message.generateInsertBalanceMsg(5, 'op', [this.parent.id, message.generateRotateForward(!isleft)]);
                 ca = message.generateInsertBalanceMsg(5, 'ca');
 
                 this._debug(operation);
@@ -447,7 +447,7 @@ export default class TreeNode {
             } else {
 
                 // reason = message.generateInsertBalanceMsg(5, 're');
-                operation = message.generateInsertBalanceMsg(6, 'op', [grande.id, this.parent.id, `${leftParent ? '右' : '左'}`]);
+                operation = message.generateInsertBalanceMsg(6, 'op', [grande.id, this.parent.id, message.generateRotateForward(!leftParent)]);
                 ca = message.generateInsertBalanceMsg(6, 'ca');
 
                 this._debug(operation);

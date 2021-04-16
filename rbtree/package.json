@@ -1,6 +1,9 @@
 {
   "name": "brtree",
-  "version": "2021.4.15",
+  "version": "1.0.0",
+  "author": {
+    "name": "老脸"
+  },
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="header-right">
-          <div v-if="false" class="dropdown">
+          <div class="dropdown">
             <button
               class="btn btn-secondary btn-sm dropdown-toggle"
               type="button"
@@ -50,7 +50,7 @@
                   @click="changeLang('en')"
                   type="button"
                 >
-                  Exllent English
+                  Excellent English
                 </button>
               </li>
             </ul>
@@ -82,19 +82,25 @@ export default {
       default: "zh",
     },
   },
-  emits: ["langChange"],
   methods: {
     changeLang(lang) {
-      this.$emit("langChange", lang);
+      if (this.$i18n) {
+        if (this.$i18n.locale != lang) {
+          this.$i18n.locale = lang;
+        }
+      }
     },
   },
   computed: {
     currentLangText() {
       if (this.isChinese) return "中文";
-      return "Exllent English";
+      return "Excellent English";
     },
     isChinese() {
-      return this.currentLang == "zh";
+      if (this.$i18n) {
+        return this.$i18n.locale == "zh";
+      }
+      return false;
     },
   },
 };
